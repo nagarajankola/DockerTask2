@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mysqlos:
+    image: mysql:5.7
+    volumes:
+      - ownsql:/var/lib/mysql
+    restart: always
+    environment: 
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=raj
+      - MYSQL_PASSWORD=Joomla123#
+      - MYSQL_DATABASE=joomladb 
+
+  joomlaos:
+    image: joomla:latest
+    restart: always
+    environment:
+      - JOOMLA_DB_HOST=mysqlos
+      - JOOMLA_DB_USER=raj
+      - JOOMLA_DB_PASSWORD=Joomla123#
+      - JOOMLA_DB_NAME=joomladb
+    ports: 
+      - 2222:80
+    depends_on:
+      - mysqlos
+
+volumes:
+  ownsql:
+
